@@ -5,9 +5,11 @@ const app = express();
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const PUSHCUT_URL = "https://api.pushcut.io/PN-.../notifications/MyNotification"; // <-- Pushcut Webhook'un buraya
 
-let counters = {};
+// Pushcut URL'ni buraya sabit olarak yazıyoruz
+const PUSHCUT_URL = "https://api.pushcut.io/PN-guWHm6sinfWidNxDnO/notifications/SessizeAl";
+
+let counters = {}; // { "ahmet": 3, "mehmet": 5 }
 
 app.post("/message", async (req, res) => {
   const sender = req.body.from?.toLowerCase() || "unknown";
@@ -20,7 +22,7 @@ app.post("/message", async (req, res) => {
 
     try {
       await fetch(PUSHCUT_URL, { method: "POST" });
-      console.log(`📨 Sessize alma tetiklendi! (${sender})`);
+      console.log(`📨 Pushcut tetiklendi → Sessize alma komutu gönderildi! (${sender})`);
     } catch (err) {
       console.error("❌ Pushcut tetiklenemedi:", err);
     }
